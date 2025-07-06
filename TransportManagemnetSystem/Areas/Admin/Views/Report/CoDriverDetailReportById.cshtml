@@ -1,0 +1,108 @@
+﻿@model BusconductorDetailReportViewModel
+@{
+    ViewData["Title"] = "सहचालक बिवरण";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body row">
+
+                <div class="col-md-4 position-relative">
+                    <label asp-for="FullName" class="control-label"></label>
+                    <span>: @Model.FullName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="FullNameNep" class="control-label"></label>
+                    <span>: @Model.FullNameNep</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="GenderId" class="control-label"></label>
+                    <span>: @Model.Gender</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="MobileNo" class="control-label"></label>
+                    <span>: @Model.MobileNo </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="PanNo" class="control-label"></label>
+                    <span>: @Model.PanNo </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="CitizenNo" class="control-label"></label>
+                    <span>: @Model.CitizenNo</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="JariMiti" class="control-label"></label>
+                    <span>: @Model.JariMiti</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="CitizenIssueDistrict" class="control-label"></label>
+                    <span>: @Model.CitizenIssueDistrictName </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="GrandFatherName" class="control-label"></label>
+                    <span>: @Model.GrandFatherName </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="FatherName" class="control-label"></label>
+                    <span>: @Model.FatherName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="StateId" class="control-label"></label>
+                    <span>: @Model.StateName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="DistrictId" class="control-label"></label>
+                    <span>: @Model.DistrictName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="PalikaId" class="control-label"></label>
+                    <span>: @Model.PalikaName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="WardId" class="control-label"></label>
+                    <span>: @Model.WardId</span>
+                </div>                
+                <div class="col-md-4 position-relative">
+                    <label asp-for="PPFilePath" class="control-label"></label>
+                    <span>
+                        :                             <img src="@Model.PPPhotoPath" alt="" height="50" width="50" id="profilePhoto" data-bs-toggle="modal" data-bs-target="#imagePreviewModal" />
+                    </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="CitizenFilePath" class="control-label"></label>
+                    <span>
+                        :                             <img src="@Model.CitizenPhotoPath" alt="" height="50" width="50" id="citizenPhoto" data-bs-toggle="modal" data-bs-target="#imagePreviewModal" />
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img id="imagePreview" src="" class="img-fluid" alt="Preview" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 pb-2 ps-2">
+            <a asp-action="CoDriverDetailReport" class="btn btn-warning"><i class="fa fa-angle-left"></i> पछाडि फर्कनुहोस्</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // $(document).ready(function () {
+        $('#profilePhoto, #citizenPhoto, #docPhoto').on('click', function () {
+                var imgSrc = $(this).attr('src');  // Get the image source
+                $('#imagePreview').attr('src', imgSrc);  // Set it to the modal image
+            });
+        // });
+    </script>
+}

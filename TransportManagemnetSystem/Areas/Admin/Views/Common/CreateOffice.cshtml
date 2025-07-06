@@ -1,0 +1,119 @@
+﻿@model OfficeViewModel
+@{
+    ViewData["Title"] = "कार्यालय सेटअप";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body">
+                <form class="row g-3 needs-validation custom-input" asp-action="CreateOffice">
+                    <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                    <input asp-for="Id" type="hidden" />
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="Code" class="control-label"></label>
+                        <input type="number" asp-for="Code" class="form-control" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="PhoneNo" class="control-label"></label>
+                        <input asp-for="PhoneNo" class="form-control" />
+                        <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="FaxNo" class="control-label"></label>
+                        <input asp-for="FaxNo" class="form-control" />
+                        <span asp-validation-for="FaxNo" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="Url" class="control-label"></label>
+                        <input asp-for="Url" class="form-control" placeholder="http://www.example.com/" />
+                        <span asp-validation-for="Url" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="StateId" class="control-label"></label>
+                        <select asp-for="StateId" asp-items="await _Utility.GetStateSelectListItems()" class="form-control">
+                            <option>--Please Select State--</option>
+                        </select>
+                        <span asp-validation-for="StateId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="DistrictId" class="control-label"></label>
+                        <select asp-for="DistrictId" asp-items="await _Utility.GetDistrictSelectListItems(Model.StateId)" class="form-control">
+                            <option>--Please Select District--</option>
+                        </select>
+                        <span asp-validation-for="DistrictId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="PalikaId" class="control-label"></label>
+                        <select asp-for="PalikaId" asp-items="await _Utility.GetPalikaSelectListItems(Model.DistrictId)" class="form-control">
+                            <option>--Please Select Palika--</option>
+                        </select>
+                        <span asp-validation-for="PalikaId" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                        <a asp-action="Office" class="btn btn-warning"><i class="fa fa-angle-left"></i> पछाडि फर्कनुहोस्</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <script>
+        $('#StateId').change(function () {
+            $.ajax({
+                url: '@Url.Action("GetDistrictByStateId", "Ajax", new { area = "" })',
+                type: 'GET',
+                data: { id: $(this).val() },
+                success: function (data) {
+                    $('#PalikaId').empty().append("<option value=''>-न.पा/ग.पा छान्नुहोस्-</option>");
+                    $('#DistrictId').empty().append("<option value=''>-जिल्ला छान्नुहोस्-</option>");
+                    $.each(data, function (index, item) {
+                        $('#DistrictId').append(`<option value="${item.value}">${item.text}</option>`);
+                    });
+                },
+                error: function () {
+                    alert('error in calling ajax !!');
+                }
+            });
+        });
+
+        $('#DistrictId').change(function () {
+            $.ajax({
+                url: '@Url.Action("GetPalikaByDistId", "Ajax", new { area = "" })',
+                type: 'GET',
+                data: { id: $(this).val() },
+                success: function (data) {
+                    $('#PalikaId').empty().append("<option value=''>-न.पा/ग.पा छान्नुहोस्-</option>");
+                    $.each(data, function (index, item) {
+                        $('#PalikaId').append(`<option value="${item.value}">${item.text}</option>`);
+                    });
+                },
+                error: function () {
+                    alert('error in calling ajax !!');
+                }
+            });
+        });
+    </script>
+}

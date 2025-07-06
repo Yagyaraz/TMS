@@ -1,0 +1,142 @@
+﻿@model OutRouteViewModel
+@{
+    ViewData["Title"] = "सवारी साधन रुट";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body">
+                <form class="row g-3 needs-validation custom-input" asp-action="CreateOutRoute">
+                    <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                    <input asp-for="Id" type="hidden" />
+
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="RouteName" class="control-label"></label>
+                        <input asp-for="RouteName" class="form-control" />
+                        <span asp-validation-for="RouteName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="SourceName" class="control-label"></label>
+                        <input asp-for="SourceName" class="form-control" />
+                        <span asp-validation-for="SourceName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="SourceTime" class="control-label"></label>
+                        <input type="time" asp-for="SourceTime" class="form-control" />
+                        <span asp-validation-for="SourceTime" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="SourceLatitude" class="control-label"></label>
+                        <input asp-for="SourceLatitude" placeholder="latitude" class="form-control" />
+                        <span asp-validation-for="SourceLatitude" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="SourceLongnitude" class="control-label"></label>
+                        <input asp-for="SourceLongnitude" placeholder="longnitude" class="form-control" />
+                        <span asp-validation-for="SourceLongnitude" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="DestinationName" class="control-label"></label>
+                        <input asp-for="DestinationName" class="form-control" />
+                        <span asp-validation-for="DestinationName" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="DestinationTime" class="control-label"></label>
+                        <input type="time" asp-for="DestinationTime" class="form-control" />
+                        <span asp-validation-for="DestinationTime" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="DestinationLatitude" class="control-label"></label>
+                        <input asp-for="DestinationLatitude" placeholder="latitude" class="form-control" />
+                        <span asp-validation-for="DestinationLatitude" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="DestinationLongnitude" class="control-label"></label>
+                        <input asp-for="DestinationLongnitude" placeholder="longnitude" class="form-control" />
+                        <span asp-validation-for="DestinationLongnitude" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-2 offset-10">
+                        <button class="btn btn-outline-success btn-lg btn-sm" type="button" id="Partial">+ थप्नुहोस्</button>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>स्टपहरु </h4>
+                            </div>
+                            <div class="table-responsive signal-table custom-scrollbar">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">स्टप नाम</th>
+                                            <th scope="col"> पुग्ने समय</th>
+                                            <th scope="col">रोक्ने समय	</th>
+                                            <th scope="col">गन्तव्य देशान्तर</th>
+                                            <th scope="col">गन्तव्य अक्षांश</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-body-Partial">
+                                        @if (Model.StopSetupViewModelList.Count > 0)
+                                        {
+                                            foreach (var item in Model.StopSetupViewModelList)
+                                            {
+                                                <partial name="_StopPartial.cshtml" model="@item" />
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <partial name="_StopPartial.cshtml" model="@new StopSetupViewModel()" />
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                        <a asp-action="OutRoute" class="btn btn-warning"><i class="fa fa-angle-left"></i> पछाडि फर्कनुहोस्</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $('#Partial').on('click', function () {
+
+            $.ajax({
+                url: '@Url.Action("StopPartial", "Route")',
+                success: function (result) {
+                    if (result) {
+                        $('#table-body-Partial').append(result);
+                    }
+                },
+                error: function () {
+                    alert('error in calling ajax !!')
+                }
+            });
+        });
+    </script>
+
+    <script>
+        function DeleteRow(e) {
+            var confirmValue = confirm("Are you sure to delete ?");
+            if (confirmValue) {
+                $(e).closest('tr').remove();
+            }
+        }
+    </script>
+}

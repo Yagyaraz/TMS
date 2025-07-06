@@ -1,0 +1,87 @@
+﻿@model IEnumerable<VehicleDartaViewModel>
+@{
+    ViewData["Title"] = "सवारी दर्ता स्वीकृत सूची";
+    // ViewData["Title"] = "Vehicle Approved List";
+    int i = 1;
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header pb-0 card-no-border">
+                <div>
+                    <h4>@ViewData["Title"]</h4>
+                </div>
+
+                <div>
+                   
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive custom-scrollbar">
+                    <table class="display" id="basic-1">
+                        <thead>
+                            <tr>
+                                <th>क्र. स.</th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.VehicleNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.EngineNo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ChasisNo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.BuildYear)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TotalSeat)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.VehicleModel)
+                                </th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Where(x => x.IsApproved == true))
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.VehicleNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EngineNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ChasisNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BuildYear)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TotalSeat)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.VehicleModel)
+                                    </td>
+                                    <td>
+
+                                        <a asp-action="BusDetail" asp-route-id="@item.Id"><i class="fa fa-info-circle"></i></a>
+
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+

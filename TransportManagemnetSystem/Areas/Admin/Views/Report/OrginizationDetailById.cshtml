@@ -1,0 +1,139 @@
+﻿@model OrginizationReportViewModel
+@{
+    ViewData["Title"] = "समिति बिवरण";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body row">
+
+                <div class="col-md-4 position-relative">
+                    <label asp-for="OrganizationName" class="control-label"></label>
+                    <span>: @Model.OrganizationName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="OrganizationNameEng" class="control-label"></label>
+                    <span>: @Model.OrganizationNameEng</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="StateId" class="control-label"></label>
+                    <span>: @Model.StateName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="DistrictId" class="control-label"></label>
+                    <span>: @Model.DistrictName </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="PalikaId" class="control-label"></label>
+                    <span>: @Model.PalikaName </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="WardNo" class="control-label"></label>
+                    <span>: @Model.WardNo</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="Area" class="control-label"></label>
+                    <span>: @Model.Area</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="Email" class="control-label"></label>
+                    <span>: @Model.Email </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="DartaMiti" class="control-label"></label>
+                    <span>: @Model.DartaMiti </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="DartaLocation" class="control-label"></label>
+                    <span>: @Model.DartaLocation</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <span>: @Model.PhoneNumber</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header pb-0 card-no-border">
+                <div>
+                    <h4>सदस्य सुची</h4>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive custom-scrollbar">
+                    <table class="display" id="basic-1">
+                        <thead>
+                            <tr>
+                                <td>नाम</td>
+                                <td>मोबाइल नं</td>
+                                <td>नागरिकता नं</td>
+                                <td>प्यान/भ्याट नं</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.MemberList)
+                            {
+                                <tr>
+                                    <td>@item.FullName</td>
+                                    <td>@item.MobileNo</td>
+                                    <td>@item.CitizenNo</td>
+                                    <td>@item.PanVatNo</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header pb-0 card-no-border">
+                <div>
+                    <h4>सवारी साधन सुची</h4>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive custom-scrollbar">
+                    <table class="display" id="data-source-1" style="width:100%">
+                        <thead>
+                            <tr>
+                                <td>सवारी साधन नं</td>
+                                <td>इन्जिन नं</td>
+                                <td>च्यासिस नं</td>
+                                <td>सवारी प्रकार</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.VehicleList)
+                            {
+                                <tr>
+                                    <td>@item.VehicleNumber</td>
+                                    <td>@item.EngineNo</td>
+                                    <td>@item.ChasisNo</td>
+                                    <td>@item.VehicleTypeName</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="col-12 pb-2 ps-2">
+    <a asp-action="OrginizationList" class="btn btn-warning"><i class="fa fa-angle-left"></i> पछाडि फर्कनुहोस्</a>
+</div> 

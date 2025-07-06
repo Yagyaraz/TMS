@@ -1,0 +1,219 @@
+﻿<button class="btn btn-info" type="button" onclick="javascript:PrintReport('contentToPrint')" formtarget="_blank">
+    <i class="fa fa-print"> प्रिन्ट </i>
+</button>
+<div class=" printpage" id="contentToPrint">
+    <div class="printcontent">
+        <div class="row ">
+            <div class="col-sm-12">
+                <div>
+                    <div class="text-center mt-2">
+                        <p class="fw-bold">अनुसूची - ७</p>
+                        <p>
+                            नेपाल सरकार <br>
+                            भौतिक पूर्वाधार तथा यातायात मन्त्रालय <br> <span class="fw-bold fs-6">
+                                यातायात व्यवस्था विभाग
+                                <br>यातायात व्यवस्था कार्यालय..................................
+                            </span>
+                        </p>
+                    </div><br>
+
+                    <p class="fw-bold ms-5">
+                        ७. सबारी नामसारी गर्दा रेकर्ड कायम राखने रजिस्टरको नमुना
+                    </p>
+
+                    <table class="table table-bordered">
+                        <thead class="text-center">
+                            <tr>
+                                <td>क्र.सं.</td>
+                                <td>सबारी नं. </td>
+                                <td>बित्रेता</td>
+                                <td>त्रेता</td>
+                                <td>मिति</td>
+                                <td>प्रमाणित गर्ने</td>
+                                <td>प्रदूषण जाँचपास मिति</td>
+                            </tr>
+                        </thead>
+
+                        <tbody class="text-center">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function PrintReport(divele) {
+            var printContent = document.getElementById(divele).innerHTML;
+            var originalContent = document.body.innerHTML;
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalContent;
+        }
+
+    </script>
+}

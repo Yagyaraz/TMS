@@ -1,0 +1,35 @@
+﻿@model ManufactureCompanyViewModel
+@{
+    ViewData["Title"] = "निर्माण कम्पनी";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body">
+                <form class="row g-3 needs-validation custom-input" asp-action="CreateManufactureCompany">
+                    <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                    <input asp-for="Id" type="hidden" />
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="NameNep" class="control-label"></label>
+                        <input asp-for="NameNep" class="form-control" />
+                        <span asp-validation-for="NameNep" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                        <a asp-action="ManufactureCompany" class="btn btn-warning"><i class="fa fa-angle-left"></i> पछाडि फर्कनुहोस्</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

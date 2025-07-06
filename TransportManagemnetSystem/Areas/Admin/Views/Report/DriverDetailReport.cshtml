@@ -1,0 +1,22 @@
+﻿@model IEnumerable<DriverDetailReportViewModel>
+@{
+    ViewData["Title"] = "Driver List";
+}
+
+<section class="card-info">
+    @foreach (var item in Model)
+    {
+        <div class="user-card-info">
+            <div class="user-info">
+                <img src="@item.PPPhotoPath" alt="User Avatar" />
+                <h2>@item.FullName</h2>
+                @* <p>Loyal Subscriber</p> *@
+
+            </div>
+            <div class="promo-code">
+                🔍  <a asp-action="DriverDetailReportById" asp-route-id="@item.Id">Full Details</a>
+            </div>
+        </div>
+    }
+
+</section>

@@ -1,0 +1,68 @@
+﻿@model RouteSearchModel
+@{
+    ViewData["Title"] = "सवारी साधन रुट";
+    // ViewData["Title"] = "Vehicle Route";
+}
+
+<form asp-action="OutRouteSearch" method="get" class="row pb-2">
+    <div class="form-group col-md-4">
+        <label for="source">स्रोत</label>
+        <input type="text" class="form-control" name="source" value="@ViewBag.source" placeholder="Enter Source" />
+    </div>
+    <div class="form-group col-md-4">
+        <label for="destination">गन्तव्य</label>
+        <input type="text" class="form-control" name="destination" value="@ViewBag.destination" placeholder="Enter Destination" />
+    </div>
+    <div class="col-md-4 pt-4">
+        <button type="submit" class="btn btn-primary">खोज्नुहोस्</button>
+    </div>
+</form>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header pb-0 card-no-border">
+                <div>
+                    <h4>@ViewData["Title"]</h4>
+                </div>
+
+
+            </div>
+            <div class="card-body">
+                <div class="table-responsive custom-scrollbar">
+                    <table class="display" id="basic-1">
+                        <thead>
+                            <tr>
+                                <th>S.N</th>
+                                <th>
+                                    रुटको नाम
+                                </th>
+                                <th>
+                                    स्रोत
+                                </th>
+                                <th>
+                                    गन्तव्य
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var route in Model.Routes)
+                            {
+                                <tr>
+                                    <td>@string.Format("{0}", Model.Routes.ToList().IndexOf(route) + 1)</td>
+                                    <td>@route.RouteName</td>
+                                    <td>@route.SourceName</td>
+                                    <td>@route.DestinationName</td>
+                                    <td>
+                                        <a asp-action="OutRouteSearchDetailsById" asp-route-id="@route.Id"><i class="fa fa-info-circle"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,170 @@
+﻿<button class="btn btn-info" type="button" onclick="javascript:PrintReport('contentToPrint')" formtarget="_blank">
+    <i class="fa fa-print"> प्रिन्ट </i>
+</button>
+<div class=" printpage" id="contentToPrint">
+    <div class="printcontent">
+        <div class="row ">
+            <div class="col-sm-12">
+                <div>
+                    <div class="text-center mt-2">
+                        <p class="fw-bold">अनुसूची - ९</p>
+                        <p>
+                            नेपाल सरकार <br>
+                            भौतिक पूर्वाधार तथा यातायात मन्त्रालय <br> <span class="fw-bold fs-6">
+                                यातायात व्यवस्था विभाग
+                                <br>यातायात व्यवस्था कार्यालय..................................
+                            </span>
+                        </p>
+                    </div><br>
+
+                    <p class="fw-bold ms-5">
+                        ९. प्रदान गरिने प्रमुख सेवा र कार्यहरूको विवरण
+                    </p>
+
+                    <table class="table table-bordered">
+                        <thead class="text-center">
+                            <tr>
+                                <td>क्र.सं.</td>
+                                <td>प्रदान गरिने सेवा, कामको विवरण</td>
+                                <td>पेस गर्ने सम्बन्धित कर्मचारी</td>
+                                <td>सम्बन्धित शाखा अधिकृत</td>
+                                <td>अन्तिम निर्णय दिने अधिकारी</td>
+                                <td>पेस गर्नुपर्ने कागजात</td>
+                                <td>काम सम्पन्न गर्न लागने समय</td>
+                                <td>लागने दस्तुर</td>
+                            </tr>
+                        </thead>
+
+                        <tbody class="text-center">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                    <div class="text-center mt-4">
+                        <p>यसवमोजिम सेवा उपलब्ध नभएमा वा कुनै समस्या परेमा गुनासो उजुरी सुन्ने कर्मचारीको</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <div class="col-4">
+                            <p>नाम : <br>पद : <br>फोन नं. :</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function PrintReport(divele) {
+            var printContent = document.getElementById(divele).innerHTML;
+            var originalContent = document.body.innerHTML;
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalContent;
+        }
+
+    </script>
+}

@@ -1,0 +1,108 @@
+﻿@page
+@model LoginModel
+@inject IUtility _Utility
+@{
+    Layout = null;
+    ViewData["Title"] = "Log in";
+    var site = await _Utility.GetProjectName();
+}
+<link rel="icon" href="/assets/images/favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="/assets/images/favicon.png" type="image/x-icon">
+<!-- Google font-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.css">
+<!-- ico-font-->
+<link rel="stylesheet" type="text/css" href="/assets/css/vendors/icofont.css">
+<!-- Themify icon-->
+<link rel="stylesheet" type="text/css" href="/assets/css/vendors/themify.css">
+<!-- Flag icon-->
+<link rel="stylesheet" type="text/css" href="/assets/css/vendors/flag-icon.css">
+<!-- Feather icon-->
+<link rel="stylesheet" type="text/css" href="/assets/css/vendors/feather-icon.css">
+<!-- Plugins css start-->
+<!-- Plugins css Ends-->
+<!-- Bootstrap css-->
+<link rel="stylesheet" type="text/css" href="/assets/css/vendors/bootstrap.css">
+<!-- App css-->
+<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+<link id="color" rel="stylesheet" href="/assets/css/color-1.css" media="screen">
+<!-- Responsive css-->
+<link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
+<style>
+    .show-hide-text {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        font-size: 14px;
+        color: #007bff;
+        cursor: pointer;
+        user-select: none;
+    }
+</style>
+
+<div class="row m-0">
+    <div class="col-12 p-0">
+        <div class="login-card login-dark">
+            <div>
+                @* <div><a class="logo" href="index.html"><img class="img-fluid for-dark" src="../assets/images/logo/logo.png" alt="looginpage"><img class="img-fluid for-light" src="../assets/images/logo/logo_dark.png" alt="looginpage"></a></div> *@
+                <div class="login-main">
+                    <form class="theme-form" id="account" method="post">
+                        <h4 style="text-align:center">@site </h4>
+                        <p>Enter your email & password to login</p>
+                        <hr/>
+                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                        <div class="form-group">
+                            <label class="col-form-label">Email Address</label>
+                            <input asp-for="Input.Email" class="form-control" type="email" required="" placeholder="Test@gmail.com">
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Password </label>
+                            <div class="form-input position-relative">
+                                <input asp-for="Input.Password" class="form-control password-input" type="password" required="" placeholder="*********">
+                                <span class="toggle-password show-hide-text" onclick="togglePassword()">Show</span>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0">
+                            <div class="checkbox p-0">
+                                <input asp-for="Input.RememberMe" id="checkbox1" type="checkbox">
+                                <label class="text-muted" for="checkbox1">Remember password</label>
+                            </div><a id="forgot-password" class="link" asp-page="./ForgotPassword">Forgot password?</a>
+                            <div class="text-end mt-3">
+                                <button class="btn btn-primary btn-block w-100" type="submit">Sign in</button>
+                            </div>
+                        </div>
+                       
+                        <p class="mt-4 mb-0 text-center">Don't have account?</p>
+                        <div class="d-flex justify-content-between" >
+                            <p><a class="ms-2" asp-page="./OuterRegister" asp-route-returnUrl="@Model.ReturnUrl">Register As Organization</a></p>
+                            <p><a class="ms-2" asp-page="./OuterUserRegister" asp-route-returnUrl="@Model.ReturnUrl">Register As User</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>
+
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+            function togglePassword() {
+                const passwordInput = document.querySelector('.password-input');
+                const toggle = document.querySelector('.toggle-password');
+
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggle.textContent = 'Hide';
+                } else {
+                    passwordInput.type = 'password';
+                    toggle.textContent = 'Show';
+                }
+            }
+            </script>
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/login.js"></script>

@@ -1,0 +1,856 @@
+﻿@using TransportManagemnetSystem.Security
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    string[] css = { "total-project border-b-primary", "total-Progress border-b-warning", "total-Complete border-b-secondary" };
+    string[] csslight = { "bg-primary-light", "bg-warning-light", "bg-secondary-light" };
+    string[] hrefs = { "/assets/svg/icon-sprite.svg#color-swatch", "/assets/svg/icon-sprite.svg#tick-circle", "/assets/svg/icon-sprite.svg#add-square" };
+
+    string[] orgcss = { "bg-yellow", "bg-red", "bg-green", "bg-blue" };
+}
+<style>
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 320px;
+        max-width: 660px;
+        margin: 1em auto;
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+
+    .highcharts-credits {
+        display: none !important;
+    }
+
+
+
+    /* for subadmin */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f5f7fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    .sidebar {
+        height: 100vh;
+        background-color: #fff;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        width: 250px;
+        padding-top: 20px;
+    }
+
+        .sidebar a {
+            color: #6c757d;
+            padding: 10px 20px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+            .sidebar a:hover {
+                color: #007bff;
+            }
+
+            .sidebar a.active {
+                background-color: #e9ecef;
+                color: #007bff;
+            }
+
+    .main-content {
+        margin-left: 250px;
+        padding: 20px;
+    }
+
+    /* Base styling for metric-card */
+    .metric-card {
+        padding: 20px;
+        border-radius: 8px;
+        color: white;
+        text-align: center;
+        opacity: 0;
+        /* Start invisible */
+    }
+
+
+
+    /* Slide from left animation */
+    .slide-from-left {
+        transform: translateX(-50px);
+        /* Start off-screen to the left */
+        animation: slideInLeft 0.5s ease-out forwards;
+    }
+
+    /* Slide from right animation */
+    .slide-from-right {
+        transform: translateX(50px);
+        /* Start off-screen to the right */
+        animation: slideInRight 0.5s ease-out forwards;
+    }
+
+
+    /* Keyframes for sliding from left */
+    @@keyframes slideInLeft {
+        0% {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Keyframes for sliding from right */
+    @@keyframes slideInRight {
+        0% {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Animation for both card and metric-card */
+    .card,
+    .metric-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 10px;
+    }
+
+        .card:hover,
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+    .metric-card {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        color: #fff;
+    }
+
+        .metric-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .metric-card p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+    .bg-yellow {
+        /* background-color: #ffc107; */
+        background: oklch(68.1% 0.162 75.834);
+    }
+
+    .bg-red {
+        /* background-color: #dc3545; */
+        background-color: oklch(63.7% 0.237 25.331);
+    }
+
+    .bg-green {
+        /* background-color: #28a745; */
+        background: oklch(44.8% 0.119 151.328);
+    }
+
+    .bg-blue {
+        /* background-color: #007bff; */
+        background: oklch(62.3% 0.214 259.815);
+    }
+
+    .chart-container {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        height: 300px;
+    }
+
+    @@media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .main-content {
+            margin-left: 0;
+        }
+    }
+
+
+
+    .col-md-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+        padding: 0 15px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .mb-3 {
+        margin-bottom: 1rem !important;
+    }
+
+    /* Metric card with bubble background container */
+    .metric-card {
+        position: relative;
+        overflow: hidden;
+        /* background-color: #ffc9289f; */
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+    /* 3D-style bubbles container */
+    .bubbles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+    }
+
+    .bubble {
+        position: absolute;
+        bottom: -100px;
+        width: 20px;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+        animation: rise 10s infinite ease-in;
+    }
+
+        /* Vary size and animation delay for realism */
+        .bubble:nth-child(2) {
+            left: 20%;
+            width: 15px;
+            height: 15px;
+            animation-delay: 2s;
+            animation-duration: 12s;
+        }
+
+        .bubble:nth-child(3) {
+            left: 40%;
+            width: 25px;
+            height: 25px;
+            animation-delay: 4s;
+            animation-duration: 9s;
+        }
+
+        .bubble:nth-child(4) {
+            left: 60%;
+            width: 10px;
+            height: 10px;
+            animation-delay: 1s;
+            animation-duration: 10s;
+        }
+
+        .bubble:nth-child(5) {
+            left: 80%;
+            width: 18px;
+            height: 18px;
+            animation-delay: 3s;
+            animation-duration: 11s;
+        }
+
+    @@keyframes rise {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 0.5;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateY(-300px) scale(1.2);
+            opacity: 0;
+        }
+    }
+
+    /* Text layer above bubbles */
+    .metric-card h3,
+    .metric-card p {
+        position: relative;
+        z-index: 1;
+    }
+
+    .fw-semibold {
+        font-weight: 600 !important;
+    }
+
+    .fw-bold {
+        font-weight: 700 !important;
+    }
+
+    .fs-3 {
+        font-size: 1.5rem !important;
+    }
+
+    .fs-2 {
+        font-size: 1.25rem !important;
+    }
+
+    .lh-sm {
+        line-height: 1.2 !important;
+    }
+
+    /* Slide animation */
+    @@keyframes slideFromLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .slide-from-left {
+        animation: slideFromLeft 0.5s ease-out forwards;
+    }
+
+    @@media (max-width: 767.98px) {
+        .col-md-3 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .metric-card {
+            padding: 15px;
+        }
+
+        .fs-3 {
+            font-size: 1.25rem !important;
+        }
+
+        .fs-2 {
+            font-size: 1rem !important;
+        }
+    }
+
+    /* ===================================================== 3D bar chart ================================== */
+
+
+    #container3D {
+        height: 400px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    @@media (max-width: 576px) {
+        #container {
+            height: 300px;
+        }
+    }
+
+    .route-block {
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+
+    .stop {
+        display: inline-block;
+        padding: 5px 10px;
+        background: #f0f0f0;
+        border-radius: 10px;
+        margin: 0 5px;
+    }
+
+
+</style>
+@if (!User.IsInRole(UserRoles.SubAdmin) && !User.IsInRole(UserRoles.OrgUser))
+{
+    <div class="container-fluid">
+        <div class="row size-column">
+            <div class="col-xxl-12 box-col-12">
+                <div class="row">
+                    @foreach (var item in Model.TotalList)
+                    {
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="card o-hidden small-widget">
+                                <div class="card-body border-2 @css[(Model.TotalList.ToList().IndexOf(item))]">
+                                    <span class="f-light f-w-500 f-14">@item.Name</span>
+                                    <div class="project-details">
+                                        <div class="project-counter">
+                                            <h2 class="f-w-600">@item.Count</h2><span class="f-12 f-w-400"></span>
+                                        </div>
+                                        <div class="product-sub @csslight[(Model.TotalList.ToList().IndexOf(item))]">
+                                            <svg class="invoice-icon">
+                                                <use href="@hrefs[(Model.TotalList.ToList().IndexOf(item))]"></use>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <ul class="bubbles">
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                      
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-6 col-lg-6">
+                <div class="mb-3 card">
+                    <div class="card-box height-100-p pd-20">
+                        <figure class="highcharts-figure">
+                            <div id="pieChart"></div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-6">
+                <div class="mb-3 card">
+                    <div class="card-box height-100-p pd-20">
+                        <figure class="highcharts-figure">
+                            <div id="container"></div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-lg-6">
+                <div class="mb-3 card">
+                    <div class="card-box height-100-p pd-20">
+
+                        <figure class="highcharts-figure">
+                            <div id="containers"></div>
+
+                        </figure>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-6">
+                <div class="mb-3 card">
+                    <div class="card-box height-100-p pd-20">
+
+                        <figure class="highcharts-figure">
+                            <div id="container1"></div>
+
+                        </figure>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12 col-lg-12">
+                <div class="mb-3 card">
+                    <div class="card-box height-100-p pd-20">
+                        <style>
+                            #container {
+                                height: 400px;
+                            }
+
+                            .highcharts-figure,
+                            .highcharts-data-table table {
+                                min-width: 310px;
+                                max-width: 800px;
+                                margin: 1em auto;
+                            }
+
+                            .highcharts-data-table table {
+                                font-family: Verdana, sans-serif;
+                                border-collapse: collapse;
+                                border: 1px solid #ebebeb;
+                                margin: 10px auto;
+                                text-align: center;
+                                width: 100%;
+                                max-width: 500px;
+                            }
+
+                            .highcharts-data-table caption {
+                                padding: 1em 0;
+                                font-size: 1.2em;
+                                color: #555;
+                            }
+
+                            .highcharts-data-table th {
+                                font-weight: 600;
+                                padding: 0.5em;
+                            }
+
+                            .highcharts-data-table td,
+                            .highcharts-data-table th,
+                            .highcharts-data-table caption {
+                                padding: 0.5em;
+                            }
+
+                            .highcharts-data-table thead tr,
+                            .highcharts-data-table tr:nth-child(even) {
+                                background: #f8f8f8;
+                            }
+
+                            .highcharts-data-table tr:hover {
+                                background: #f1f7ff;
+                            }
+
+                        </style>
+                        <figure class="highcharts-figure">
+                            <div id="container2"></div>
+
+                        </figure>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="mb-3 card">
+                    <div class="card-box height-100-p pd-20">
+                        <figure class="highcharts-figure">
+                            <div id="container3"></div>
+                        </figure>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row mb-4">
+       @foreach (var iteme in Model.TotalListAccToOrg)
+        {
+            <div class="col-md-3 mb-3">
+                <div class="metric-card @orgcss[(Model.TotalListAccToOrg.ToList().IndexOf(iteme))] slide-from-left" style="animation-delay: 0s;">
+                    <div class="bubbles">
+                        <div class="bubble"></div>
+                        <div class="bubble"></div>
+                        <div class="bubble"></div>
+                        <div class="bubble"></div>
+                        <div class="bubble"></div>
+                    </div>
+                    <h3 class="fw-semibold fs-3 lh-sm">@iteme.Count</h3>
+                    <p class="fw-bold fs-2 lh-sm"><span></span> @iteme.Name</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <!-- Sales Per Day -->
+        <div class="col-md-6 mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center fs-3 fw-semibold">Overall Members</h4>
+                    <div id="container6" class="w-100 h-100"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Revenue -->
+        <div class="col-md-6 mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center fs-3 fw-semibold">Vehicle Category Count</h5>
+
+                    <div id="revenueChart" class="w-100"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Traffic Sources -->
+        <div class="col-md-12 mb-5">
+            <div class="card">
+
+                <div class="card-body">
+                    <figure class="highcharts-figure">
+                        <div id="container7"></div>
+                        <p class="highcharts-description">
+                           
+                        </p>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <div id="routes-wrapper"></div>
+                </div>
+            </div>
+        </div>
+
+        @* <div class="col-md-12 mb-5">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="container">
+                        <div class="chart-title mx-auto text-center fs-3 fw-semibold">Bus And Routes</div>
+                        <div id="container3D" class="w-100 h-100"></div>
+                       
+                    </div>
+
+                </div>
+            </div>
+        </div> *@
+    </div>
+    <div class="row">
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Vehicle Number</th>
+                        <th>Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ba 2 kha 2088</td>
+                        <td>Rs. 1,200</td>
+                    </tr>
+                    <tr>
+                        <td>ba 2 kha 2012</td>
+                        <td>Rs. 950</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Total</th>
+                        <th>Rs. 2,150</th>  
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+}
+@section Scripts {
+
+
+    <script>
+        $(document).ready(function () {
+            PieChartsOrg();
+            PieChartsAppDisp();
+            ColumnChart();
+            PieChartForRoles();
+            LineChartVehicle();
+            RouteLineChart();
+            GetPieDataOne();
+            GetPieDataTwo();
+            GetLineDataThree();
+            GetLineDataFour();
+        });
+
+        function GetPieChartDataUrlOrg() {
+            return '@Url.Action("GetPieChartDataOrg", "Ajax")';
+        }
+        function GetPieChartDataAppDisapp() {
+            return '@Url.Action("GetPieChartDataApprovUnApprov", "Ajax")';
+        }
+        function GetColumnChart() {
+            return '@Url.Action("GetColumnChart", "Ajax")';
+        }
+        // function GetColumnChart() {
+        //     return '@Url.Action("GetColumnChart", "Ajax")';
+        // }
+        function GetPieChartForRoles() {
+            return '@Url.Action("GetPieChartForRoles", "Ajax")';
+        }
+        function GetLineChartVehicle() {
+            return '@Url.Action("GetLineChartVehicle", "Ajax")';
+        }
+        function GetRouteLineChart() {
+            return '@Url.Action("GetRouteLineChart", "Ajax")';
+        }
+
+        //org data for charts
+        function GetPieDataNumberOne(){
+            return '@Url.Action("GetPieDataNumberOne", "Ajax")';
+        }
+        function GetPieDataNumberTwo(){
+             return '@Url.Action("GetPieDataNumberTwo", "Ajax")';
+        }
+        function GetLineDataNumberThree(){
+             return '@Url.Action("GetLineDataNumberThree", "Ajax")';
+        }
+        function GetLineDataNumberFour(){
+             return '@Url.Action("GetLineDataNumberFour", "Ajax")';
+        }
+    </script>
+
+   @*  <script>
+
+
+                       
+
+
+               Highcharts.chart("container3D", {
+                 chart: {
+                   type: "column",
+                   options3d: {
+                     enabled: true,
+                     alpha: 10,
+                     beta: 25,
+                     depth: 100,
+                   },
+                 },
+                 title: {
+                   text: null,
+                 },
+                 subtitle: {
+                   text: null,
+                 },
+                 credits: {
+                   enabled: false,
+                 },
+                 exporting: {
+                   enabled: false,
+                 },
+                 legend: {
+                   enabled: true,
+                 },
+                 plotOptions: {
+                   column: {
+                     depth: 45,
+                   },
+                 },
+                 xAxis: {
+                   type: "category",
+                   labels: {
+                     skew3d: true,
+                     style: {
+                       fontSize: "14px",
+                     },
+                   },
+                 },
+                 yAxis: {
+                   title: {
+                     text: null,
+                   },
+                   labels: {
+                     formatter: function () {
+                       return this.value / 1000 + "K";
+                     },
+                   },
+                 },
+                 tooltip: {
+                   valueSuffix: "",
+                 },
+                 series: [
+                   {
+                     name: "Bus And Routes",
+                     data: [
+                       ["Ring Road Circular Route(1)", 21956],
+                       ["Tinpipley-Lagankhel(2)", 114358],
+                       ["Bhatkepati-Old Bus Park (3)", 47726],
+                       ["Bhaktapur-Ratnapark (4)", 0],
+                       ["Godawari-Ratnapark (5)", 116128],
+                       ["Naulithan Temple-New Bus Park (6)", 48957],
+                       ["Alapot-Sahid Gate (7)", 3046],
+                       ["Bhotchaur-Old Bus Park (8)", 110695],
+                       ["Telkot-Ratnapark (9)", 10399],
+                       ["Duwakot-New Bus Park (10)", 76285],
+                       ["Alapot-Thankot (11)", null],
+                       ["Engineering College-Koteshwor (12)", 10014],
+                     ],
+                   },
+                 ],
+                 responsive: {
+                   rules: [
+                     {
+                       condition: {
+                         maxWidth: 500,
+                       },
+                       chartOptions: {
+                         xAxis: {
+                           labels: {
+                             style: {
+                               fontSize: "12px",
+                             },
+                           },
+                         },
+                       },
+                     },
+                   ],
+                 },
+               });
+
+    </script> *@
+}

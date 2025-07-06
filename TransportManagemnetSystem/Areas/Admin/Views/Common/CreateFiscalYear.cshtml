@@ -1,0 +1,96 @@
+﻿@model FiscalYearViewModel
+@{
+    ViewData["Title"] = "आर्थिक बर्ष";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body">
+                <form class="row g-3 needs-validation custom-input" asp-action="CreateFiscalYear">
+                    <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                    <input asp-for="Id" type="hidden" />
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="Name_En" class="control-label"></label>
+                        <input asp-for="Name_En" class="form-control" />
+                        <span asp-validation-for="Name_En" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="StartYear" class="control-label"></label>
+                        <input asp-for="StartYear" class="form-control" />
+                        <span asp-validation-for="StartYear" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="EndYear" class="control-label"></label>
+                        <input asp-for="EndYear" class="form-control" />
+                        <span asp-validation-for="EndYear" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="DateFrom" class="control-label"></label>
+                        <input asp-for="DateFrom" class="form-control" />
+                        <span asp-validation-for="DateFrom" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="DateFromEng" class="control-label"></label>
+                        <input asp-for="DateFromEng" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="DateFromEng" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="DateTo" class="control-label"></label>
+                        <input asp-for="DateTo" class="form-control" />
+                        <span asp-validation-for="DateTo" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="DateToEng" class="control-label"></label>
+                        <input asp-for="DateToEng" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="DateToEng" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="Code" class="control-label"></label>
+                        <input asp-for="Code" class="form-control" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="DisplayPosition" class="control-label"></label>
+                        <input asp-for="DisplayPosition" class="form-control" />
+                        <span asp-validation-for="DisplayPosition" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 position-relative">
+                    <label asp-for="PreviousFiscalYearId" class="control-label"></label>
+                    <select asp-for="PreviousFiscalYearId" asp-items="@await _Utility.GetAllFiscalYearList()" class="form-select">
+                    <option value="">--Previous Year--</option>
+                    </select>
+                    <span asp-validation-for="PreviousFiscalYearId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 position-relative">
+                        <input class="custom-checkbox" asp-for="IsActive" />
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                        <a asp-action="FiscalYear" class="btn btn-warning"><i class="fa fa-angle-left"></i> पछाडि फर्कनुहोस्</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        NepaliDatePickerCalWithAdDateConverter(document.getElementById('DateFrom'), document.getElementById('DateFromEng'))
+        NepaliDatePickerCalWithAdDateConverter(document.getElementById('DateTo'), document.getElementById('DateToEng'))
+    </script>
+}
+

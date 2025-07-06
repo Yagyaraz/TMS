@@ -1,0 +1,149 @@
+﻿@model VehicleDartaReportViewModel
+@{
+    ViewData["Title"] = "गाडी बिवरण";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body row">
+
+                <div class="col-md-4 position-relative">
+                    <label asp-for="VehicleCategoryId" class="control-label"></label>
+                    <span>: @Model.VehicleCategoryId</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="VehicleTypeId" class="control-label"></label>
+                    <span>: @Model.VehicleTypeId</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="ManufactureCompanyId" class="control-label"></label>
+                    <span>: @Model.ManufactureCompanyId</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="EngineTypeId" class="control-label"></label>
+                    <span>: @Model.EngineTypeId </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="VehicleNumber" class="control-label"></label>
+                    <span>: @Model.VehicleNumber </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="EngineNo" class="control-label"></label>
+                    <span>: @Model.EngineNo</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="ChasisNo" class="control-label"></label>
+                    <span>: @Model.ChasisNo</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="BuildYear" class="control-label"></label>
+                    <span>: @Model.BuildYear </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="TotalSeat" class="control-label"></label>
+                    <span>: @Model.TotalSeat </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="VehicleModel" class="control-label"></label>
+                    <span>: @Model.VehicleModel</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="StandardTypeId" class="control-label"></label>
+                    <span>: @Model.StandardTypeId</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="Cilinder" class="control-label"></label>
+                    <span>: @Model.Cilinder</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="HorsePower" class="control-label"></label>
+                    <span>: @Model.HorsePower</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="VehicleColor" class="control-label"></label>
+                    <span>: @Model.VehicleColor</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="VehicleMirrorColor" class="control-label"></label>
+                    <span>: @Model.VehicleMirrorColor</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="SancharUpakaran" class="control-label"></label>
+                    <span>: @Model.SancharUpakaran</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="TotalWeight" class="control-label"></label>
+                    <span>: @Model.TotalWeight</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="KarPramanPatra" class="control-label"></label>
+                    <span>: @Model.KarPramanPatra</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="Jachpass" class="control-label"></label>
+                    <span>: @Model.Jachpass</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="PradushanPramanpatra" class="control-label"></label>
+                    <span>: @Model.PradushanPramanpatra</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="RouteName" class="control-label"></label>
+                    <span>: @Model.RouteName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="OtherPraman" class="control-label"></label>
+                    <span>: @Model.OtherPraman</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="IDartaPramanPartaFile" class="control-label"></label>
+                    <img src="@Model.DartaPramanPartaFile" alt="" height="50" width="50" id="DartaPramanimg" data-bs-toggle="modal" data-bs-target="#imagePreviewModal" />
+
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="IParichayePatraFile" class="control-label"></label>
+                    <img src="@Model.ParichayePatraFile" alt="" height="50" width="50" id="ParichayePatraimg" data-bs-toggle="modal" data-bs-target="#imagePreviewModal" />
+
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="ILicenseFile" class="control-label"></label>
+                    <img src="@Model.LicenseFile" alt="" height="50" width="50" id="Licenseimg" data-bs-toggle="modal" data-bs-target="#imagePreviewModal" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4></h4>
+            </div>
+            <div class="card-body row">
+            <div class="col-md-4 position-relative">
+                <label asp-for="VehicleAssignedDataDetails.VehicleName" class="control-label"></label>
+                <span>: @Model.VehicleAssignedDataDetails.VehicleName</span>
+            </div>
+            <div class="col-md-4 position-relative">
+                <label asp-for="VehicleAssignedDataDetails.DriverName" class="control-label"></label>
+                <span>: @Model.VehicleAssignedDataDetails.DriverName</span>
+            </div>
+            <div class="col-md-4 position-relative">
+                <label asp-for="VehicleAssignedDataDetails.ConductorName" class="control-label"></label>
+                <span>: @Model.VehicleAssignedDataDetails.ConductorName</span>
+            </div>
+            <div class="col-md-4 position-relative">
+                <label asp-for="VehicleAssignedDataDetails.RouteName" class="control-label"></label>
+                <span>: @Model.VehicleAssignedDataDetails.RouteName</span>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 pb-2 ps-2">
+    <a asp-action="VehicleDartaList" class="btn btn-warning"><i class="fa fa-angle-left"></i> पछाडि फर्कनुहोस्</a>
+</div> 

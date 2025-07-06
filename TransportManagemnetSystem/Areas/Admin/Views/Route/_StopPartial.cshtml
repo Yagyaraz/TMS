@@ -1,0 +1,36 @@
+﻿@using HtmlHelpers.BeginCollectionItemCore
+
+@model StopSetupViewModel
+
+
+<tr class="new">
+    @using (Html.BeginCollectionItem("StopSetupViewModelList"))
+    {
+     <td>
+            <input asp-for="Id" type="hidden" />
+            <input asp-for="RouteId" type="hidden" />
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+     </td>  
+     <td>
+            <input type="time" asp-for="Time" class="form-control time-input" />
+            <span asp-validation-for="Time" class="text-danger"></span>
+     </td>
+     <td>
+            <input type="time" asp-for="StopTime" class="form-control stop-time-input" />
+            <span asp-validation-for="StopTime" class="text-danger"></span>
+     </td>
+     <td>
+            <input asp-for="Latitude" placeholder="Latitude" class="form-control" />
+            <span asp-validation-for="Latitude" class="text-danger"></span>
+     </td>
+
+        <td>
+            <input asp-for="Longnitude" placeholder="Longnitude" class="form-control" />
+            <span asp-validation-for="Longnitude" class="text-danger"></span>
+        </td>
+     <td>
+            <button type="button" onclick="DeleteRow(this)" class="row-button btn btn-sm btn-danger btn-delete"><i class="fa fa-minus"></i></button>
+     </td>
+    }
+</tr>

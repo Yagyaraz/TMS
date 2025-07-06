@@ -1,0 +1,230 @@
+﻿@page
+@model OuterRegisterModel
+@inject IUtility _Utility;
+@{
+    Layout = null;
+    ViewData["Title"] = "Register";
+}
+<link rel="icon" href="/assets/images/favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="/assets/images/favicon.png" type="image/x-icon">
+<!-- Google font-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.css">
+<!-- ico-font-->
+<link rel="stylesheet" type="text/css" href="/assets/css/vendors/icofont.css">
+<!-- Themify icon-->
+<link rel="stylesheet" type="text/css" href="/assets/css/vendors/themify.css">
+<!-- Flag icon-->
+<link rel="stylesheet" type="text/css" href="/assets/css/vendors/flag-icon.css">
+<!-- Feather icon-->
+<link rel="stylesheet" type="text/css" href="/assets/css/vendors/feather-icon.css">
+<!-- Plugins css start-->
+<!-- Plugins css Ends-->
+<!-- Bootstrap css-->
+<link rel="stylesheet" type="text/css" href="/assets/css/vendors/bootstrap.css">
+<!-- App css-->
+<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+<link id="color" rel="stylesheet" href="/assets/css/color-1.css" media="screen">
+<!-- Responsive css-->
+<link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
+
+<link href="~/lib/nepali.datepicker.v3.7/css/nepali.datepicker.v3.7.min.css" rel="stylesheet" />
+
+<style>
+    .login-main {
+        width: 100%;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 37px rgba(8, 21, 66, 0.05);
+        margin: 0 auto;
+        background-color: #fff;
+    }
+</style>
+
+<div class="row m-0">
+    <div class="col-12 p-0">
+        <div class="">
+            <div>
+                <div class="login-main">
+                    <form class="theme-form" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <h4>Create your account</h4>
+                        <p>Enter your personal details to create account</p>
+                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="Input.OrganizationDetail.OrganizationName" class="col-form-label pt-0"></label>
+                                    <div class="row g-2">
+                                        <input asp-for="Input.OrganizationDetail.OrganizationName" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="Input.OrganizationDetail.OrganizationNameEng" class="col-form-label pt-0"></label>
+                                    <div class="row g-2">
+                                        <input asp-for="Input.OrganizationDetail.OrganizationNameEng" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="Input.OrganizationDetail.PhoneNumber" class="col-form-label pt-0"></label>
+                                    <div class="row g-2">
+                                        <input asp-for="Input.OrganizationDetail.PhoneNumber" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="Input.OrganizationDetail.StateId" class="col-form-label pt-0"></label>
+                                    <div class="row g-2">
+                                        <select asp-for="Input.OrganizationDetail.StateId" asp-items="@await _Utility.GetStateSelectListItems()" class="form-select">
+                                            <option value="">--Select State--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="Input.OrganizationDetail.DistrictId" class="col-form-label pt-0"></label>
+                                    <div class="row g-2">
+                                        <select asp-for="Input.OrganizationDetail.DistrictId" asp-items="@await _Utility.GetDistrictSelectListItems(null)" class="form-select">
+                                            <option value="">--Select District--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="Input.OrganizationDetail.PalikaId" class="col-form-label pt-0"></label>
+                                    <div class="row g-2">
+                                        <select asp-for="Input.OrganizationDetail.PalikaId" asp-items="@await _Utility.GetPalikaSelectListItems(null)" class="form-select">
+                                            <option value="">--Select Palika--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="Input.OrganizationDetail.WardNo" class="col-form-label pt-0"></label>
+                                    <div class="row g-2">
+                                        <input asp-for="Input.OrganizationDetail.WardNo" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="Input.OrganizationDetail.Area" class="col-form-label pt-0"></label>
+                                    <div class="row g-2">
+                                        <input asp-for="Input.OrganizationDetail.Area" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="Input.OrganizationDetail.DartaMiti" class="col-form-label pt-0"></label>
+                                    <div class="row g-2">
+                                        <input asp-for="Input.OrganizationDetail.DartaMiti" class="form-control">
+                                        <input asp-for="Input.OrganizationDetail.DartaMitiEng" type="hidden" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="Input.OrganizationDetail.DartaLocation" class="col-form-label pt-0"></label>
+                                    <div class="row g-2">
+                                        <input asp-for="Input.OrganizationDetail.DartaLocation" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-form-label">Email Address</label>
+                                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                    @* <label asp-for="Input.Email">Email</label> *@
+                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-form-label">Password</label>
+                                    <div class="form-input position-relative">
+                                        <input asp-for="Input.Password" class="form-control" type="password" required="" placeholder="*********">
+                                        @* <div class="show-hide"><span class="show"></span></div> *@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-form-label">Confirm Password</label>
+                                    <div class="form-input position-relative">
+                                        <input asp-for="Input.ConfirmPassword" class="form-control" type="password" required="" placeholder="*********">
+                                        <div class="show-hide"><span class="show"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <input type="submit" value="Register" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/lib/nepali.datepicker.v3.7/js/nepali.datepicker.v3.7.min.js"></script>
+<script src="~/js/nepali-date-custom.js"></script>
+
+    <script>
+        NepaliDatePickerCalWithAdDateConverter(document.getElementById('Input_OrganizationDetail_DartaMiti'), document.getElementById('Input_OrganizationDetail_DartaMitiEng'))
+
+    </script>
+    <script>
+        $('#Input_OrganizationDetail_StateId').change(function () {
+            $.ajax({
+                url: '@Url.Action("GetDistrictByStateId", "Ajax", new { area = "" })',
+                type: 'GET',
+                data: { id: $(this).val() },
+                success: function (data) {
+                    $('#Input_OrganizationDetail_PalikaId').empty().append("<option value=''>-न.पा/ग.पा छान्नुहोस्-</option>");
+                    $('#Input_OrganizationDetail_DistrictId').empty().append("<option value=''>-जिल्ला छान्नुहोस्-</option>");
+                    $.each(data, function (index, item) {
+                        $('#Input_OrganizationDetail_DistrictId').append(`<option value="${item.value}">${item.text}</option>`);
+                    });
+                },
+                error: function () {
+                    alert('error in calling ajax !!');
+                }
+            });
+        });
+
+        $('#Input_OrganizationDetail_DistrictId').change(function () {
+            $.ajax({
+                url: '@Url.Action("GetPalikaByDistId", "Ajax", new { area = "" })',
+                type: 'GET',
+                data: { id: $(this).val() },
+                success: function (data) {
+                    $('#Input_OrganizationDetail_PalikaId').empty().append("<option value=''>-न.पा/ग.पा छान्नुहोस्-</option>");
+                    $.each(data, function (index, item) {
+                        $('#Input_OrganizationDetail_PalikaId').append(`<option value="${item.value}">${item.text}</option>`);
+                    });
+                },
+                error: function () {
+                    alert('error in calling ajax !!');
+                }
+            });
+        });
+    </script>

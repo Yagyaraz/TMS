@@ -1,0 +1,95 @@
+﻿@model RouteViewModel
+@{
+    ViewData["Title"] = "सवारी साधन रुट बिवरण";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body row">
+
+                <div class="col-md-4 position-relative">
+                    <label asp-for="RouteName" class="control-label"></label>
+                    <span>: @Model.RouteName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="SourceName" class="control-label"></label>
+                    <span>: @Model.SourceName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="SourceTime" class="control-label"></label>
+                    <span>: @Model.SourceTime</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="SourceLatitude" class="control-label"></label>
+                    <span>: @Model.SourceLatitude </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="SourceLongnitude" class="control-label"></label>
+                    <span>: @Model.SourceLongnitude </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="DestinationName" class="control-label"></label>
+                    <span>: @Model.DestinationName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="DestinationTime" class="control-label"></label>
+                    <span>: @Model.DestinationTime</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="DestinationLatitude" class="control-label"></label>
+                    <span>: @Model.DestinationLatitude </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="DestinationLongnitude" class="control-label"></label>
+                    <span>: @Model.DestinationLongnitude </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header pb-0 card-no-border">
+                <div>
+                    <h4>स्टपहरु</h4>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive custom-scrollbar">
+                    <table class="display" id="basic-1">
+                        <thead>
+                            <tr>
+                                <td>स्टप नाम</td>
+                                <td>पुग्ने समय</td>
+                                <td>रोक्ने समय	</td>
+                                <td>गन्तव्य देशान्तर</td>
+                                <td>गन्तव्य अक्षांश</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.StopSetupViewModelList)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Time</td>
+                                    <td>@item.StopTime</td>
+                                    <td>@item.Longnitude</td>
+                                    <td>@item.Latitude</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 pb-2 ps-2">
+    <a asp-action="RouteSearch" class="btn btn-warning"><i class="fa fa-angle-left"></i> पछाडि फर्कनुहोस्</a>
+</div> 

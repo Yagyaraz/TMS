@@ -1,0 +1,294 @@
+﻿@model VehicleDartaViewModel
+@{
+    ViewData["Title"] = "सवारी दर्ता";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body">
+                <form class="row g-3 needs-validation custom-input" asp-action="CreateVehicleDarta" enctype="multipart/form-data">
+                    <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                    <input asp-for="Id" type="hidden" />
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="VehicleOwnerName" class="control-label"></label>
+                        <input asp-for="VehicleOwnerName" class="form-control" />
+                        <span asp-validation-for="VehicleOwnerName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="MobileNo" class="control-label"></label>
+                        <input asp-for="MobileNo" class="form-control"/>
+                        <span asp-validation-for="MobileNo" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 position-relative">
+                        <label asp-for="VehicleCategoryId" class="control-label"></label>
+                        <select asp-for="VehicleCategoryId" asp-items="@await _Utility.GetAllVehicleCategoryList()" class="form-select">
+                            <option value="">-- Vehicle Category --</option>
+                        </select>
+                        <span asp-validation-for="VehicleCategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 position-relative">
+                        <label asp-for="VehicleTypeId" class="control-label"></label>
+                        <select asp-for="VehicleTypeId" asp-items="@await _Utility.GetAllVehicleTypeList(Model.VehicleCategoryId)" class="form-select">
+                            <option value="">-- Vehicle Type --</option>
+                        </select>
+                        <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 position-relative">
+                        <label asp-for="ManufactureCompanyId" class="control-label"></label>
+                        <select asp-for="ManufactureCompanyId" asp-items="@await _Utility.GetAllManufactureCompanyList()" class="form-select">
+                            <option value="">-- Manufacture Company --</option>
+                        </select>
+                        <span asp-validation-for="ManufactureCompanyId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 position-relative">
+                        <label asp-for="EngineTypeId" class="control-label"></label>
+                        <select asp-for="EngineTypeId" asp-items="@await _Utility.GetAllEngineTypeList()" class="form-select">
+                            <option value="">-- Engine Type--</option>
+                        </select>
+                        <span asp-validation-for="EngineTypeId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="VehicleNumber" class="control-label"></label>
+                        <input asp-for="VehicleNumber" class="form-control" />
+                        <span asp-validation-for="VehicleNumber" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="EngineNo" class="control-label"></label>
+                        <input asp-for="EngineNo" class="form-control" />
+                        <span asp-validation-for="EngineNo" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="ChasisNo" class="control-label"></label>
+                        <input asp-for="ChasisNo" class="form-control" />
+                        <span asp-validation-for="ChasisNo" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="BuildYear" class="control-label"></label>
+                        <input asp-for="BuildYear" class="form-control" />
+                        <span asp-validation-for="BuildYear" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="TotalSeat" class="control-label"></label>
+                        <input asp-for="TotalSeat" min="1" class="form-control" />
+                        <span asp-validation-for="TotalSeat" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="VehicleModel" class="control-label"></label>
+                        <input asp-for="VehicleModel" class="form-control" />
+                        <span asp-validation-for="VehicleModel" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="StandardTypeId" class="control-label"></label>
+                        <select asp-for="StandardTypeId" asp-items="@await _Utility.GetAllStandardTypeList()" class="form-select">
+                            <option value="">-- Standard Type--</option>
+                        </select>
+                        <span asp-validation-for="StandardTypeId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="Cilinder" class="control-label"></label>
+                        <input asp-for="Cilinder" class="form-control" />
+                        <span asp-validation-for="Cilinder" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="HorsePower" class="control-label"></label>
+                        <input asp-for="HorsePower" class="form-control" />
+                        <span asp-validation-for="HorsePower" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="VehicleColor" class="control-label"></label>
+                        <input asp-for="VehicleColor" class="form-control" />
+                        <span asp-validation-for="VehicleColor" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="VehicleMirrorColor" class="control-label"></label>
+                        <input asp-for="VehicleMirrorColor" class="form-control" />
+                        <span asp-validation-for="VehicleMirrorColor" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="SancharUpakaran" class="control-label"></label>
+                        <input asp-for="SancharUpakaran" class="form-control" />
+                        <span asp-validation-for="SancharUpakaran" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="TotalWeight" class="control-label"></label>
+                        <input asp-for="TotalWeight" class="form-control" />
+                        <span asp-validation-for="TotalWeight" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="KarPramanPatra" class="control-label"></label>
+                        <input asp-for="KarPramanPatra" class="form-control" />
+                        <span asp-validation-for="KarPramanPatra" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="Jachpass" class="control-label"></label>
+                        <input asp-for="Jachpass" class="form-control" />
+                        <span asp-validation-for="Jachpass" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="PradushanPramanpatra" class="control-label"></label>
+                        <input asp-for="PradushanPramanpatra" class="form-control" />
+                        <span asp-validation-for="PradushanPramanpatra" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="RouteName" class="control-label"></label>
+                        <input asp-for="RouteName" class="form-control" />
+                        <span asp-validation-for="RouteName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="OtherPraman" class="control-label"></label>
+                        <input asp-for="OtherPraman" class="form-control" />
+                        <span asp-validation-for="OtherPraman" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="IDartaPramanPartaFile" class="control-label"></label>
+                        <input asp-for="IDartaPramanPartaFile" accept="image/png, image/jpeg, image/gif" class="form-control" />
+                        <span asp-validation-for="IDartaPramanPartaFile" class="text-danger"></span>
+                        @if (Model.Id != 0)
+                        {
+                            <img src="@Model.DartaPramanPartaFile" alt="" height="50" width="50" id="DartaPramanimg" data-bs-toggle="modal" data-bs-target="#imagePreviewModal" />
+                        }
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="IParichayePatraFile" class="control-label"></label>
+                        <input asp-for="IParichayePatraFile" accept="image/png, image/jpeg, image/gif" class="form-control" />
+                        <span asp-validation-for="IParichayePatraFile" class="text-danger"></span>
+                        @if (Model.Id != 0)
+                        {
+                            <img src="@Model.ParichayePatraFile" alt="" height="50" width="50" id="ParichayePatraimg" data-bs-toggle="modal" data-bs-target="#imagePreviewModal" />
+                        }
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="ILicenseFile" class="control-label"></label>
+                        <input asp-for="ILicenseFile" accept="image/png, image/jpeg, image/gif" class="form-control" />
+                        <span asp-validation-for="ILicenseFile" class="text-danger"></span>
+                        @if (Model.Id != 0)
+                        {
+                            <img src="@Model.LicenseFile" alt="" height="50" width="50" id="Licenseimg" data-bs-toggle="modal" data-bs-target="#imagePreviewModal" />
+                        }
+                    </div>
+
+                    <hr />
+                    <div class="col-md-4 position-relative">
+                        <input asp-for="bluebookRouteBimaViewModelList.Id" type="hidden" />
+                        <input asp-for="bluebookRouteBimaViewModelList.VehicleId" type="hidden"/>
+
+                        <label asp-for="bluebookRouteBimaViewModelList.BluebookDartaMiti" class="control-label"></label>
+                        <input asp-for="bluebookRouteBimaViewModelList.BluebookDartaMiti" class="form-control" required />
+                        <input asp-for="bluebookRouteBimaViewModelList.BluebookDartaDate" class="form-control" type="hidden" />
+                        <span asp-validation-for="bluebookRouteBimaViewModelList.BluebookDartaMiti" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="bluebookRouteBimaViewModelList.BluebookEndMiti" class="control-label"></label>
+                        <input asp-for="bluebookRouteBimaViewModelList.BluebookEndMiti" class="form-control" required />
+                        <input asp-for="bluebookRouteBimaViewModelList.BluebookEndDate" class="form-control" type="hidden" />
+                        <span asp-validation-for="bluebookRouteBimaViewModelList.BluebookEndMiti" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="bluebookRouteBimaViewModelList.PollutionDartaMiti" class="control-label"></label>
+                        <input asp-for="bluebookRouteBimaViewModelList.PollutionDartaMiti" class="form-control" required />
+                        <input asp-for="bluebookRouteBimaViewModelList.PollutionDartaDate" class="form-control" type="hidden" />
+                        <span asp-validation-for="bluebookRouteBimaViewModelList.PollutionDartaMiti" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="bluebookRouteBimaViewModelList.PollutionEndMiti" class="control-label"></label>
+                        <input asp-for="bluebookRouteBimaViewModelList.PollutionEndMiti" class="form-control" required />
+                        <input asp-for="bluebookRouteBimaViewModelList.PollutionEndDate" class="form-control" type="hidden" />
+                        <span asp-validation-for="bluebookRouteBimaViewModelList.PollutionEndMiti" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="bluebookRouteBimaViewModelList.RouteDartaMiti" class="control-label"></label>
+                        <input asp-for="bluebookRouteBimaViewModelList.RouteDartaMiti" class="form-control" required />
+                        <input asp-for="bluebookRouteBimaViewModelList.RouteDartaDate" class="form-control" type="hidden" />
+                        <span asp-validation-for="bluebookRouteBimaViewModelList.RouteDartaMiti" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="bluebookRouteBimaViewModelList.RouteEndMiti" class="control-label"></label>
+                        <input asp-for="bluebookRouteBimaViewModelList.RouteEndMiti" class="form-control" required />
+                        <input asp-for="bluebookRouteBimaViewModelList.RouteEndDate" class="form-control" type="hidden" />
+                        <span asp-validation-for="bluebookRouteBimaViewModelList.RouteEndMiti" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="bluebookRouteBimaViewModelList.BimaCompanyName" class="control-label"></label>
+                        <input asp-for="bluebookRouteBimaViewModelList.BimaCompanyName" class="form-control" required />
+                        <span asp-validation-for="bluebookRouteBimaViewModelList.BimaCompanyName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="bluebookRouteBimaViewModelList.BimaDartaMiti" class="control-label"></label>
+                        <input asp-for="bluebookRouteBimaViewModelList.BimaDartaMiti" class="form-control" required />
+                        <input asp-for="bluebookRouteBimaViewModelList.BimaDartaDate" class="form-control" type="hidden" />
+                        <span asp-validation-for="bluebookRouteBimaViewModelList.BimaDartaMiti" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="bluebookRouteBimaViewModelList.BimaEndMiti" class="control-label"></label>
+                        <input asp-for="bluebookRouteBimaViewModelList.BimaEndMiti" class="form-control" required />
+                        <input asp-for="bluebookRouteBimaViewModelList.BimaEndDate" class="form-control" type="hidden" />
+                        <span asp-validation-for="bluebookRouteBimaViewModelList.BimaEndMiti" class="text-danger"></span>
+                    </div>
+
+                    <hr />
+                    <div class="col-12">
+                        @* <button class="btn btn-primary" type="submit">Submit form</button> *@
+                        <button class="btn btn-primary" type="submit">सुरक्षित गर्नुहोस् </button>
+                        <a asp-action="VehicleDarta" class="btn btn-warning"><i class="fa fa-angle-left"></i> पछाडि फर्कनुहोस्</a>
+                    </div>
+                </form>
+                <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <img id="imagePreview" src="" class="img-fluid" alt="Preview" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        NepaliDatePickerCalWithAdDateWithDisableNextDate(document.getElementById('bluebookRouteBimaViewModelList_BluebookDartaMiti'), document.getElementById('bluebookRouteBimaViewModelList_BluebookDartaDate'));
+        NepaliDatePickerCalWithAdDateWithNotDisableNextDate(document.getElementById('bluebookRouteBimaViewModelList_BluebookEndMiti'), document.getElementById('bluebookRouteBimaViewModelList_BluebookEndDate'));
+        NepaliDatePickerCalWithAdDateWithDisableNextDate(document.getElementById('bluebookRouteBimaViewModelList_PollutionDartaMiti'), document.getElementById('bluebookRouteBimaViewModelList_PollutionDartaDate'));
+        NepaliDatePickerCalWithAdDateWithNotDisableNextDate(document.getElementById('bluebookRouteBimaViewModelList_PollutionEndMiti'), document.getElementById('bluebookRouteBimaViewModelList_PollutionEndDate'));
+        NepaliDatePickerCalWithAdDateWithDisableNextDate(document.getElementById('bluebookRouteBimaViewModelList_RouteDartaMiti'), document.getElementById('bluebookRouteBimaViewModelList_RouteDartaDate'));
+        NepaliDatePickerCalWithAdDateWithNotDisableNextDate(document.getElementById('bluebookRouteBimaViewModelList_RouteEndMiti'), document.getElementById('bluebookRouteBimaViewModelList_RouteEndDate'));
+        NepaliDatePickerCalWithAdDateWithDisableNextDate(document.getElementById('bluebookRouteBimaViewModelList_BimaDartaMiti'), document.getElementById('bluebookRouteBimaViewModelList_BimaDartaDate'));
+        NepaliDatePickerCalWithAdDateWithNotDisableNextDate(document.getElementById('bluebookRouteBimaViewModelList_BimaEndMiti'), document.getElementById('bluebookRouteBimaViewModelList_BimaEndDate'));
+    </script>
+    <script>
+        $('#VehicleCategoryId').change(function () {
+            $.ajax({
+                url: '@Url.Action("GetVehileTypeByCatId", "Ajax", new { area = "" })',
+                type: 'GET',
+                data: { id: $(this).val() },
+                success: function (data) {
+                    $('#VehicleTypeId').empty().append("<option value=''>-Vehicle Type-</option>");
+                    $.each(data, function (index, item) {
+                        $('#VehicleTypeId').append(`<option value="${item.value}">${item.text}</option>`);
+                    });
+                },
+                error: function () {
+                    alert('error in calling ajax !!');
+                }
+            });
+        });
+    </script>
+    <script>
+        // $(document).ready(function () {
+            $('#DartaPramanimg, #ParichayePatraimg, #Licenseimg').on('click', function () {
+                var imgSrc = $(this).attr('src');  // Get the image source
+                $('#imagePreview').attr('src', imgSrc);  // Set it to the modal image
+            });
+        // });
+    </script>
+}

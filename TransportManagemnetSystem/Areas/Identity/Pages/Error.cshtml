@@ -1,0 +1,18 @@
+﻿@page
+@model ErrorModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="error-wrapper">
+    <div class="container">
+        <img class="img-100" src="../assets/images/other-images/sad.png" alt="">
+        <div class="error-heading">
+            <h2 class="headline font-info" style="color:red !important">404</h2>
+        </div>
+        <div class="col-md-8 offset-md-2">
+            <p class="sub-content">Page Not Found</p>
+        </div>
+        <div><a class="btn btn-info btn-lg" asp-area="" asp-controller="Home" asp-action="Index">BACK TO HOME PAGE</a></div>
+    </div>
+</div>

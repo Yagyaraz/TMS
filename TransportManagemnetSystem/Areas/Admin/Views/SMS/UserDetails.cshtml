@@ -1,0 +1,61 @@
+﻿@model OrganizationDetailViewModel
+@{
+    ViewData["Title"] = "UserDetails";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body row">
+
+                <div class="col-md-4 position-relative">
+                    <label asp-for="OrganizationName" class="control-label"></label>
+                    <span>: @Model.OrganizationName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="OrganizationNameEng" class="control-label"></label>
+                    <span>: @Model.OrganizationNameEng</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="StateId" class="control-label"></label>
+                    <span>: @Model.StateName</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="DistrictId" class="control-label"></label>
+                    <span>: @Model.DistrictName </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="PalikaId" class="control-label"></label>
+                    <span>: @Model.PalikaName </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="WardNo" class="control-label"></label>
+                    <span>: @Model.WardNo</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="Area" class="control-label"></label>
+                    <span>: @Model.Area</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="Email" class="control-label"></label>
+                    <span>: @Model.Email </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="DartaMiti" class="control-label"></label>
+                    <span>: @Model.DartaMiti </span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="DartaLocation" class="control-label"></label>
+                    <span>: @Model.DartaLocation</span>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <span>: @Model.PhoneNumber</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

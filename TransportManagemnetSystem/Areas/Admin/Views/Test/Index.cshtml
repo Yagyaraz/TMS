@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Dynamic Map";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>@ViewData["Title"]</h1>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            
+            // Replace with your route ID
+            var routeId = 1;
+
+            $.ajax({
+                url: '@Url.Action("GetRouteData", "Test", new { area = "Admin" })',
+                // url: '/Test/GetRouteData?routeId=' + routeId,
+                type: 'GET',
+                data: { routeId: routeId },
+                success: function (data) {
+                    
+                    // Initialize the map
+                    var map = L.map('map').setView([data.source.latitude, data.source.longitude], 13);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                    }).addTo(map);
+
+                    // Add source marker
+                    L.marker([data.source.latitude, data.source.longitude]).addTo(map)
+                        .bindPopup(data.source.name + ' (Source)').openPopup();
+
+                    // Add destination marker
+                    L.marker([data.destination.latitude, data.destination.longitude]).addTo(map)
+                        .bindPopup(data.destination.name + ' (Destination)').openPopup();
+
+                    // Add stops markers
+                    data.stops.forEach(function (stop) {
+                        L.marker([stop.latitude, stop.longitude]).addTo(map)
+                            .bindPopup(stop.name + ' (Stop) at ' + stop.stopTime);
+                    });
+
+                    // Create a polyline for the route (Example: using the source and destination)
+                    var routeCoordinates = [
+                        [data.source.latitude, data.source.longitude],
+                        ...data.stops.map(s => [s.latitude, s.longitude]),
+                        [data.destination.latitude, data.destination.longitude]
+                    ];
+                    var polyline = L.polyline(routeCoordinates, { color: 'blue' }).addTo(map);
+
+                    // Fit the map to the route
+                    map.fitBounds(polyline.getBounds());
+                },
+                error: function (error) {
+                    console.error('Error fetching route data:', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

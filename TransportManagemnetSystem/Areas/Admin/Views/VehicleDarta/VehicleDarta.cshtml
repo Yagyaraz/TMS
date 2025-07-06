@@ -1,0 +1,256 @@
+﻿@model IEnumerable<VehicleDartaViewModel>
+@{
+    ViewData["Title"] = "सवारी दर्ता";
+}
+<style>
+    .green-box {
+        width: 15px;
+        height: 15px;
+        background-color: #008028;
+    }
+
+    .gray-box {
+        width: 15px;
+        height: 15px;
+        background-color: #80a0ca;
+    }
+    </style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header pb-0 card-no-border">
+                <div>
+                    <h4>@ViewData["Title"]</h4>
+                </div>
+
+                <div>
+                    @if (User.IsInRole(UserRoles.SubAdmin))
+                    {
+                        <p class="mb-0"><a class="btn btn-primary pull-right btn-add" asp-action="CreateVehicleDarta"><i class="fa fa-plus"></i> &nbsp; नयाँ बनाउनुहोस्</a></p>
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive custom-scrollbar">
+                    <table class="display" id="basic-1">
+                        <thead>
+                            <tr>
+                                <th>क्र. स.</th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.VehicleNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.EngineNo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ChasisNo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.BuildYear)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TotalSeat)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.VehicleModel)
+                                </th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                var color = item.IsApproved == true ? "green" : item.IsApproved == false ? "red" : "gray";
+                                <tr style="color:@color" ;>
+                                    <td>@string.Format("{0}", Model.ToList().IndexOf(item) + 1)</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.VehicleNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EngineNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ChasisNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BuildYear)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TotalSeat)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.VehicleModel)
+                                    </td>
+                                    <td>
+                                        @if (User.IsInRole(UserRoles.SubAdmin))
+                                        {
+                                            <a asp-action="CreateVehicleDarta" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
+                                            @if (item.IsApproved == true && item.IsAssgned != true)
+                                            {
+                                                <button type="button" class="btn btn-primary" title="Approve" onclick="assignModel(this, '@item.Id')">
+                                                    <i class="fa fa-check-circle"></i>
+                                                </button>
+                                            }
+                                        }
+                                        @if (!User.IsInRole(UserRoles.SubAdmin) && item.IsApproved != true)
+                                        {
+
+                                            <button type="button" class="btn btn-primary" title="Approve" onclick="approveModel(this, '@item.Id')" @* data-bs-toggle="modal" data-bs-target="#exampleModal" *@>
+                                                <i class="fa fa-check-circle"></i>
+                                            </button>
+
+                                        }
+
+                                        <a asp-action="UploadFile" asp-route-Vehicleid="@item.Id"><i class="fa fa-upload"></i></a> 
+                                        @* <a asp-action="BookingSeat" asp-route-Vehicleid="@item.Id"><i class="fa fa-bus"></i></a>  *@
+
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="green-box"></div>
+                    <span> - approved</span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="gray-box"></div>
+                    <span> - unapproved/pending</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">सार्वजनिक यातायात संचालन गर्ने स्वीकृतिको ढाचा</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="dartaId" name="dartaId" />
+                <label>नाम</label>
+                <input type="text" class="Decision form-control" id="Name" required />
+                <label>दर्जा</label>
+                <input type="text" class="Decision form-control" id="Darja" required />
+                <label>मिति</label>
+                <input type="text" class="Decision form-control regDate" id="Date" required />
+                <label>स्वीकृत नं</label>
+                <input type="text" class="Decision form-control" id="approveNo" required />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="SaveApprove">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">गाडी, चालक, सह-चालक र रुट दिने</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="dartaId" name="dartaId" />                
+                <label>चालक</label>
+                <select id="DriverId" asp-items="await _Utility.GetAllDriverList()" class="form-control" required>
+                    <option>--चालक छान्नुहोस्--</option>
+                </select>
+                <label>सहचालक</label>
+                <select id="ConductorId" asp-items="await _Utility.GetAllConductorList()" class="form-control" required>
+                    <option>--सहचालक छान्नुहोस्--</option>
+                </select>
+                <label>रुट</label>
+                <select id="RouteId" asp-items="await _Utility.GetAllRouteList()" class="form-control" required>
+                    <option>--रुट छान्नुहोस्--</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="SaveAssigned">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function approveModel(a, id) {            
+            $('#dartaId').val(id);
+            $("#exampleModal").modal('show');
+        }
+        $('#SaveApprove').click(function () {
+            debugger
+            var id = $('#dartaId').val();
+            var Name = $('#Name').val();
+            var Darja = $('#Darja').val();
+            var Date = $('#Date').val();
+            var approveNo = $('#approveNo').val();
+            if (!isNaN(id)) {
+                $.ajax({
+                    url: '@Url.Action("ApproveVehicleDarta", "VehicleDarta", new { area = "Admin" })',
+                    type: 'POST',
+                    data: { Id: id, Name: Name, Darja: Darja, Date: Date, approveNo: approveNo },
+                    success: function (result) {
+                         $.alert('सवारी दर्ता सफल भयो');
+                        window.location.reload(true);
+                    },
+                    error: function () {
+                        $.alert('error in calling ajax !!');
+                    }
+                })
+            } else {
+                $.alert('error in calling ajax!');
+            }
+        });
+         function assignModel(a, id) {
+             debugger
+            $('#dartaId').val(id);
+            $("#exampleModal1").modal('show');
+
+            $('#SaveAssigned').click(function(){
+                debugger
+                var id = $('#dartaId').val();
+                var DriverId = $('#DriverId').val();
+                var ConductorId = $('#ConductorId').val();
+                var RouteId = $('#RouteId').val();
+                if(!isNaN(id)){
+                    $.ajax({
+                    url: '@Url.Action("ApproveAll", "VehicleDarta", new { area = "Admin" })',
+                    type: 'POST',
+                    data: { Id: id, DriverId: DriverId, ConductorId: ConductorId, RouteId: RouteId },
+                    success: function (result) {
+                         $.alert('गाडी, चालक, सह-चालक र रुट सुरक्षित भयो');
+                        window.location.reload(true);
+                    },
+                    error: function () {
+                        $.alert('error in calling ajax !!');
+                    }
+                })
+                } else {
+                    $.alert('error in calling ajax!');
+                }
+            });
+        }
+    </script>
+    <script>
+        var date = document.getElementsByClassName("regDate");
+        date.nepaliDatePicker({
+            ndpYear: true,
+            ndpMonth: true,
+            readOnlyInput: true,
+            autoclose: true,
+            todayHighlight: true,
+            container: '#exampleModal'
+        });
+    </script>
+}

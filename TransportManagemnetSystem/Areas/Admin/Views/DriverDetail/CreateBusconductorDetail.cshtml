@@ -1,0 +1,188 @@
+﻿@model BusconductorDetailViewModel
+@{
+    ViewData["Title"] = "सह-चालक दर्ता";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body">
+                <form class="row g-3 needs-validation custom-input" asp-action="CreateBusconductorDetail" enctype="multipart/form-data">
+                    <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                    <input asp-for="Id" type="hidden" />
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="FullName" class="control-label"></label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="FullNameNep" class="control-label"></label>
+                        <input asp-for="FullNameNep" class="form-control" />
+                        <span asp-validation-for="FullNameNep" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="GenderId" class="control-label"></label>
+                        <select asp-for="GenderId" asp-items="@await _Utility.GetGenderSelectListItems()" class="form-select">
+                            <option value="">-- Gender--</option>
+                        </select>
+                        <span asp-validation-for="GenderId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="MobileNo" class="control-label"></label>
+                        <input asp-for="MobileNo" class="form-control" />
+                        <span asp-validation-for="MobileNo" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="PanNo" class="control-label"></label>
+                        <input asp-for="PanNo" class="form-control" />
+                        <span asp-validation-for="PanNo" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="CitizenNo" class="control-label"></label>
+                        <input asp-for="CitizenNo" class="form-control" />
+                        <span asp-validation-for="CitizenNo" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="JariMiti" class="control-label"></label>
+                        <input asp-for="JariMiti" class="form-control" />
+                        <span asp-validation-for="JariMiti" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="CitizenIssueDistrict" class="control-label"></label>
+                        <select asp-for="CitizenIssueDistrict" asp-items="@await _Utility.GetDistrictSelectListItems(null)" class="form-select">
+                            <option value="">-- District--</option>
+                        </select>
+                        <span asp-validation-for="CitizenIssueDistrict" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="GrandFatherName" class="control-label"></label>
+                        <input asp-for="GrandFatherName" class="form-control" />
+                        <span asp-validation-for="GrandFatherName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="FatherName" class="control-label"></label>
+                        <input asp-for="FatherName" class="form-control" />
+                        <span asp-validation-for="FatherName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="StateId" class="control-label"></label>
+                        <select asp-for="StateId" asp-items="await _Utility.GetStateSelectListItems()" class="form-control">
+                            <option>--Please Select State--</option>
+                        </select>
+                        <span asp-validation-for="StateId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="DistrictId" class="control-label"></label>
+                        <select asp-for="DistrictId" asp-items="await _Utility.GetDistrictSelectListItems(Model.StateId)" class="form-control">
+                            <option>--Please Select District--</option>
+                        </select>
+                        <span asp-validation-for="DistrictId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="PalikaId" class="control-label"></label>
+                        <select asp-for="PalikaId" asp-items="await _Utility.GetPalikaSelectListItems(Model.DistrictId)" class="form-control">
+                            <option>--Please Select Palika--</option>
+                        </select>
+                        <span asp-validation-for="PalikaId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="WardId" class="control-label"></label>
+                        <input asp-for="WardId" class="form-control" />
+                        <span asp-validation-for="WardId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="PPFilePath" class="control-label"></label>
+                        <input asp-for="PPFilePath" accept="image/png, image/jpeg, image/gif" class="form-control" />
+                        <span asp-validation-for="PPFilePath" class="text-danger"></span>
+                        @if (Model.Id != 0)
+                        {
+                            <img src="@Model.PPPhotoPath" alt="" height="50" width="50" id="profilePhoto" data-bs-toggle="modal" data-bs-target="#imagePreviewModal" />
+                        }
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="CitizenFilePath" class="control-label"></label>
+                        <input asp-for="CitizenFilePath" accept="image/png, image/jpeg, image/gif" class="form-control" />
+                        <span asp-validation-for="CitizenFilePath" class="text-danger"></span>
+                        @if (Model.Id != 0)
+                        {
+                            <img src="@Model.CitizenPhotoPath" alt="" height="50" width="50" id="citizenPhoto" data-bs-toggle="modal" data-bs-target="#imagePreviewModal" />
+                        }
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                        <a asp-action="BusconductorDetail" class="btn btn-warning"><i class="fa fa-angle-left"></i> पछाडि फर्कनुहोस्</a>
+                    </div>
+                </form>
+                <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <img id="imagePreview" src="" class="img-fluid" alt="Preview" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // $(document).ready(function () {
+        $('#profilePhoto, #citizenPhoto').on('click', function () {
+                var imgSrc = $(this).attr('src');  // Get the image source
+                $('#imagePreview').attr('src', imgSrc);  // Set it to the modal image
+            });
+        // });
+    </script>
+    <script>
+        NepaliDatePickerCal(document.getElementById('JariMiti'));
+    </script>
+    <script>
+        $('#StateId').change(function () {
+            $.ajax({
+                url: '@Url.Action("GetDistrictByStateId", "Ajax", new { area = "" })',
+                type: 'GET',
+                data: { id: $(this).val() },
+                success: function (data) {
+                    $('#PalikaId').empty().append("<option value=''>-न.पा/ग.पा छान्नुहोस्-</option>");
+                    $('#DistrictId').empty().append("<option value=''>-जिल्ला छान्नुहोस्-</option>");
+                    $.each(data, function (index, item) {
+                        $('#DistrictId').append(`<option value="${item.value}">${item.text}</option>`);
+                    });
+                },
+                error: function () {
+                    alert('error in calling ajax !!');
+                }
+            });
+        });
+
+        $('#DistrictId').change(function () {
+            $.ajax({
+                url: '@Url.Action("GetPalikaByDistId", "Ajax", new { area = "" })',
+                type: 'GET',
+                data: { id: $(this).val() },
+                success: function (data) {
+                    $('#PalikaId').empty().append("<option value=''>-न.पा/ग.पा छान्नुहोस्-</option>");
+                    $.each(data, function (index, item) {
+                        $('#PalikaId').append(`<option value="${item.value}">${item.text}</option>`);
+                    });
+                },
+                error: function () {
+                    alert('error in calling ajax !!');
+                }
+            });
+        });
+    </script>
+}

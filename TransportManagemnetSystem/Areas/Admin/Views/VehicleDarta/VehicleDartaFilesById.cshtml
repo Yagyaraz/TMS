@@ -1,0 +1,81 @@
+﻿@model VehicleDartaFilesViewModel
+
+@{
+    ViewData["Title"] = "सवारी कागजात";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body row">
+
+                <div class="col-md-4 position-relative">
+                    <label asp-for="VehicleNumber" class="control-label"></label>
+                    <span>: @Model.VehicleNumber</span>
+                </div>
+
+            </div>
+            <div class="card-body row">
+
+                <div class="col-md-4 position-relative d-flex flex-column">
+                    <label asp-for="DartaPramanPartaFile" class="control-label"></label>
+                    <img src="@Model.DartaPramanPartaFile" alt="" height="100" width="100" id="DartaPramanimg" onclick="viewImageFullScreen(this)" />
+                </div>
+                <div class="col-md-4 position-relative d-flex flex-column">
+                    <label asp-for="ParichayePatraFile" class="control-label"></label>
+                    <img src="@Model.ParichayePatraFile" alt="" height="100" width="100" id="ParichayePatraFile" onclick="viewImageFullScreen(this)" />
+                </div>
+                <div class="col-md-4 position-relative d-flex flex-column">
+                    <label asp-for="LicenseFile" class="control-label"></label>
+                    <img src="@Model.LicenseFile" alt="" height="100" width="100" id="LicenseFile" onclick="viewImageFullScreen(this)" />
+                </div>
+
+            </div>
+            <div class="card-body row">
+                <div>
+                    <span>अरु कागजातहरु</span>
+                    <hr />
+                </div>
+
+                @foreach (var item in Model.AdditionalFiles)
+                {
+                    <div class="col-md-3 position-relative pt-2 pb-2">
+                        <div>
+                            <img src="@item.FilePath" data-id="@item.Id" alt="" style="width: 100%;object-fit: cover;height: 14rem;" onclick="viewImageFullScreen(this)" />
+                            <div class="text-center">
+                            <span class="text-center">@item.FileName</span>
+                            </div>
+                        </div>           
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Image Preview Modal -->
+<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imagePreviewLabel">Full Screen Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="fullScreenImage" src="" class="img-fluid" alt="Image Preview" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function viewImageFullScreen(imageElement) {
+        var imageUrl = imageElement.src;  // Get the clicked image's src
+        document.getElementById("fullScreenImage").src = imageUrl;  // Set it in the modal image
+        var imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));  // Initialize the modal
+        imagePreviewModal.show();  // Show the modal
+    }
+</script>

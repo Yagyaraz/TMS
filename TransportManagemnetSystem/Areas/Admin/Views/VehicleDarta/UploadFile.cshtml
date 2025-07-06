@@ -1,0 +1,138 @@
+﻿@model VehicleDartaAddImageViewModel
+@{
+    ViewData["Title"] = "UploadFile";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body">
+                <form class="row g-3 needs-validation custom-input" asp-action="UploadFile" enctype="multipart/form-data">
+                    <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                    @* <input asp-for="Id" type="hidden" /> *@
+                    <input asp-for="VehicleDartaId" type="hidden" />
+@* 
+                    <div class="col-md-4 position-relative">
+                        <label asp-for="FilePath" class="control-label"></label>
+                        <input asp-for="Files" type="file" id="files" name="files" multiple="multiple" class="form-control" accept="image/png, image/gif, image/jpeg" required />
+
+                    </div>
+                    <div class="row">
+                        @foreach (var item in Model.FileList)
+                        {
+                            <div class="col-md-3 position-relative pt-2 pb-2">
+                                <img src="@item.FilePath" data-id="@item.Id" alt="" style="width:100%; object-fit: cover; height: 14rem;" cursor="pointer" ; onclick="viewImageFullScreen(this)" />
+                            </div>
+                        }
+                    </div> *@
+                    <div class="col-md-2 offset-10">
+                        <button class="btn btn-outline-success btn-lg btn-sm" type="button" id="Partial">+ थप्नुहोस्</button>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>कागजातहरु</h4>
+                            </div>
+                            <div class="table-responsive signal-table custom-scrollbar">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"> नाम</th>
+                                            <th scope="col"> पुग्ने समय</th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-body-Partial">
+                                        @if (Model.FileList.Count > 0)
+                                        {
+                                            foreach (var item in Model.FileList)
+                                            {
+                                                <partial name="_VehicleFilePartial.cshtml" model="@item" />
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <partial name="_VehicleFilePartial.cshtml" model="@new VehicleDartaAddImageViewModel()" />
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        @* <button class="btn btn-primary" type="submit">Submit form</button> *@
+                        <button class="btn btn-primary" type="submit">सुरक्षित गर्नुहोस् </button>
+                        <a asp-action="VehicleDarta" class="btn btn-warning"><i class="fa fa-angle-left"></i> पछाडि फर्कनुहोस्</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@* 
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Full Screen File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="fullScreenImage" src="" alt="Full screen image" class="img-fluid" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to handle image click -->
+<script>
+    function viewImageFullScreen(imgElement) {
+        var imgSrc = imgElement.src;
+        document.getElementById("fullScreenImage").src = imgSrc;
+
+        // Show the modal
+        var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        imageModal.show();
+    }
+</script>
+ *@
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $('#Partial').on('click', function () {
+            debugger;
+            $.ajax({
+                url: '@Url.Action("DocsDetails", "VehicleDarta", new { Area = "Admin" })',
+                success: function (result) {
+                    debugger
+                    if (result) {
+                        $('#table-body-Partial').append(result);
+                    }
+                },
+                error: function () {
+                    alert('error in calling ajax !!')
+                }
+            });
+        });
+    </script>
+
+    <script>
+        function DeleteRow(e) {
+            var confirmValue = confirm("Are you sure to delete ?");
+            if (confirmValue) {
+                $(e).closest('tr').remove();
+            }
+        }
+    </script>
+}

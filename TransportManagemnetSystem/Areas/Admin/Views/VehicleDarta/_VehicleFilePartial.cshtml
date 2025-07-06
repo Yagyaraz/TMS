@@ -1,0 +1,29 @@
+﻿@model VehicleDartaAddImageViewModel
+@using HtmlHelpers.BeginCollectionItemCore;
+
+<tr class="new">
+    @using (Html.BeginCollectionItem("FileList"))
+    {
+        <td>
+            <input asp-for="Id" type="hidden" />
+            @* <input asp-for="VehicleDartaId" type="hidden" /> *@
+            <input asp-for="FileName" class="form-control" />
+            <span asp-validation-for="FileName" class="text-danger"></span>
+        </td>
+        <td>
+            <input type="file" asp-for="Files" multiple="multiple" class="form-control" accept="image/png, image/gif, image/jpeg, application/pdf" />
+            @if (!string.IsNullOrEmpty(Model.FilePath))
+            {
+                <a href="@Model.FilePath" target="_blank">View Full Page File</a>
+            }
+        </td>
+        <td>
+            <img src="@Model.FilePath" alt="" height="50" width="50" />
+        </td>
+
+        <td>
+                <button type="button" onclick="DeleteRow(this)" class="row-button btn btn-sm btn-danger btn-delete"><i class="fa fa-minus"></i></button>
+           
+        </td>
+    }
+</tr>
